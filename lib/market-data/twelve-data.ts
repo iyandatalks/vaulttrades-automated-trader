@@ -1,1 +1,4 @@
-
+import { config } from '../config';
+import type { Candle,Timeframe } from '../types';
+function normalize(raw:unknown):Candle[]{ const values=Array.isArray((raw as {values?:unknown[]})?.values)?(raw as {values:unknown[]}).values:[]; return values.map((v:any)=>({time:Date.parse(v.datetime)||Number(v.datetime)||0,open:Number(v.open),high:Number(v.high),low:Number(v.low),close:Number(v.close),volume:Number(v.volume||0)})).filter(x=>Object.values(x).every(Number.isFinite)).reverse(); }
+export async function candles(timeframe:Timeframe,symbol=config['symbol'] as string,limit=120){ if(!config.twelveDataKey) return []; const interval=timeframe.replace('M','min'); const url=new URL(`${config.twelveDataBaseUrl}/time_series`); url.searchParams.set('symbol',symbol); url.searchParams.set('interval',interval); url.searchParams.set('outputsize',String(limit)); url.searchParams.set('apikey',config.twelveDataKey); const r=await fetch(url); if(!r.ok) throw new Error(`Market data ${r.status}`); return normalize(await r.json()); }

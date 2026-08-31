@@ -1,1 +1,5 @@
-
+import { candles } from '../twelve-data';
+import { strategySignal } from '../../strategies';
+import { config } from '../../config';
+import type { Signal,Timeframe } from '../../types';
+export async function scan():Promise<Signal[]>{ const out:Signal[]=[]; const m5=await candles('M5',config.symbol); const m15=await candles('M15',config.symbol); const a=strategySignal(m5); const b=strategySignal(m15); if(a){ const confirmed=!!b&&b.side===a.side; if(confirmed||!b){ out.push({id:`${Date.now()}-M5`,symbol:config.symbol,strategy:'Vault Multi-Timeframe Engine',side:a.side,timeframe:'M5',entry:a.entry,stopLoss:a.stopLoss,takeProfit:a.takeProfit,confidence:confirmed?Math.min(95,a.confidence+10):a.confidence,status:confirmed?'ACTIVE':'NEW',createdAt:new Date().toISOString(),source:'AUTOMATION',reason:confirmed?[...a.reason,'M15 confirmation']:a.reason,higherTimeframeConfirmed:confirmed}); } } if(b){ out.push({id:`${Date.now()}-M15`,symbol:config.symbol,strategy:'Vault Multi-Timeframe Engine',side:b.side,timeframe:'M15',entry:b.entry,stopLoss:b.stopLoss,takeProfit:b.takeProfit,confidence:b.confidence,status:'ACTIVE',createdAt:new Date().toISOString(),source:'AUTOMATION',reason:b.reason,higherTimeframeConfirmed:true}); } return out; }

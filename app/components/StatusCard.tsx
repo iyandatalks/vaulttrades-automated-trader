@@ -1,1 +1,4 @@
-
+'use client';
+import { useEffect,useState } from 'react';
+import type { EngineStatus } from '@/lib/types';
+export default function StatusCard(){ const [s,setS]=useState<EngineStatus|null>(null); useEffect(()=>{const load=()=>fetch('/api/automation/status').then(r=>r.json()).then(setS).catch(()=>{});load();const id=setInterval(load,10000);return()=>clearInterval(id)},[]); return <div className="statusGrid"><div className="card"><span>Automation</span><strong>{s?.enabled?'ENABLED':'DISABLED'}</strong></div><div className="card"><span>Engine health</span><strong className={s?.healthy?'buy':'sell'}>{s?.healthy?'HEALTHY':'ERROR'}</strong></div><div className="card"><span>Data</span><strong>{s?.dataProvider||'—'}</strong></div><div className="card"><span>Execution</span><strong>{s?.executionProvider||'—'}</strong></div></div> }

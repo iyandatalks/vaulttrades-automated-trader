@@ -1,1 +1,1 @@
-
+export default function Pipeline(){return <section className="panel"><div className="panelHead"><h2>Automation pipeline</h2><span>No manual execution control</span></div><div className="pipeline"><div><b>01</b><span>Market data</span><small>Twelve Data</small></div><div><b>02</b><span>Signal engine</span><small>M5 / M15</small></div><div><b>03</b><span>Validation</span><small>Risk geometry + confidence</small></div><div><b>04</b><span>Execution</span><small>MetaKit / MT5 adapter</small></div></div></section>}

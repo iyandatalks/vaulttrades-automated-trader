@@ -1,1 +1,1 @@
-
+export default function Sidebar(){return <aside className="sidebar"><div className="brand">Vault<span>Trades</span></div><nav><a className="active">Dashboard</a><a>Signals</a><a>Execution</a><a>Automation</a></nav><div className="sideNote">M5 + M15 preferred<br/>Scheduled automation only</div></aside>}

@@ -1,1 +1,1 @@
-
+export default function ActivityFeed(){return <section className="panel"><div className="panelHead"><h2>Activity</h2><span>System events</span></div><div className="activity"><p><b>Automation</b> runs on the scheduled Vercel cron.</p><p><b>Signal tab</b> displays only signals produced by the engine.</p><p><b>Execution</b> remains adapter-based until provider credentials are configured.</p></div></section>}

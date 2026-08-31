@@ -1,1 +1,4 @@
-
+'use client';
+import { useEffect,useState } from 'react';
+import type { Signal } from '@/lib/types';
+export default function SignalTable(){ const [signals,setSignals]=useState<Signal[]>([]); useEffect(()=>{const load=()=>fetch('/api/signals').then(r=>r.json()).then(x=>setSignals(x.signals||[])).catch(()=>{}); load(); const id=setInterval(load,15000); return()=>clearInterval(id)},[]); return <section className="panel"><div className="panelHead"><h2>Signals</h2><span>Latest automated signals</span></div><div className="tableWrap"><table><thead><tr><th>Time</th><th>Symbol</th><th>TF</th><th>Side</th><th>Entry</th><th>SL</th><th>TP</th><th>Confidence</th><th>Status</th></tr></thead><tbody>{signals.map(s=><tr key={s.id}><td>{new Date(s.createdAt).toLocaleTimeString()}</td><td>{s.symbol}</td><td>{s.timeframe}</td><td className={s.side==='BUY'?'buy':'sell'}>{s.side}</td><td>{s.entry.toFixed(2)}</td><td>{s.stopLoss.toFixed(2)}</td><td>{s.takeProfit.toFixed(2)}</td><td>{s.confidence}%</td><td><b>{s.status}</b></td></tr>)}{!signals.length&&<tr><td colSpan={9} className="empty">Waiting for the scheduled signal engine…</td></tr>}</tbody></table></div></section> }
