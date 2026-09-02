@@ -9,5 +9,9 @@ export const config = {
   metaKitKey: process.env.META_KIT_API_KEY || '',
   mt5BaseUrl: process.env.MT5_BASE_URL || '',
   mt5Key: process.env.MT5_API_KEY || '',
+  api2TradeApiKey: process.env.API2TRADE_API_KEY || '',
+  api2TradeAccountId: process.env.API2TRADE_ACCOUNT_ID || '',
+  api2TradeDefaultVolume: Number(process.env.API2TRADE_DEFAULT_VOLUME || '0.01'),
+  api2TradeExpertId: Number(process.env.API2TRADE_EXPERT_ID || '714001'),
   cronSecret: process.env.CRON_SECRET || '',
 };
